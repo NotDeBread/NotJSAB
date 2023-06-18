@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Not JSAB</title>
+</head>
+
+<body>
+
+    <span id="version">BETA v0.01</span>
+
+    <span id="score">0</span>
+
+    <div id="deathScreenContainer" style="display: none;">
+        <em class="deathScreenTitle">YOU DEAD</em>
+        <span id="endingScore">Score: 0</span>
+        <button onclick="window.location.reload()" class="button">Try Again</button>
+    </div>
+
+
+    <div class="healthBarContainer">
+        <div id="healthBar">
+            <div class="healthBarText">
+                <span id="health">3 / 3</span>
+            </div>
+            <div class="healthBarShine"></div>
+            <div id="healthBarOverlay"></div>
+        </div>
+        <div id="endlessTimer">
+            <div id="endlessTimerOverlay"></div>
+        </div>
+    </div>
+
+    <div class="info" id="debug" style="display: none;">
+        <span>Player:</span><br>
+        <span id="playerPosX">X: 0</span><br>
+        <span id="playerPosY">Y: 0</span><br>
+        <span id="playerColliding">Speed: 0</span><br>
+        <span id="playerSpeed">Colliding?: false</span><br><br>
+        <span id="playerUp">Player Up?: false</span><br>
+        <span id="playerDown">Player Down?: false</span><br>
+        <span id="playerLeft">Player Left?: false</span><br>
+        <span id="playerRight">Player Right?: false</span><br><br>
+        <span id="activeHazards">Screen Shake: 0</span><br>
+        <span id="fps">FPS: 0</span><br>
+    </div>
+    <div class="gameContainer">
+        <div id="game">
+            <div id="tooltip">
+                <div class="key">
+                    <span>E</span>
+                </div>
+            </div>
+            <div id="player"></div>
+            <div id="menu">
+                <div class="songs">
+                    <div class="song" id="songEndless">
+                        <span class="songTitle">Endless</span>
+                        <span class="songAuthor">Play infinitely!</span>
+                    </div>
+                    <img src="info.png" width="400">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="DeBread.js"></script>
+    <script src="script.js"></script>
+    <script src="level.js"></script>
+</body>
+
+</html>

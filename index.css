@@ -1,0 +1,396 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --bouncy: cubic-bezier(0,3,.75,1);
+  --bouncy2: cubic-bezier(.5,-0.5,.75,1);
+}
+
+body {
+  margin: 0;
+  background-color: rgb(25, 25, 25);
+  color: white;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+#version {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  opacity: 0.5;
+}
+
+#score {
+  font-size: 3em;
+  font-weight: 700;
+  position: absolute;
+  top: -50px;
+  left: 10px;
+  line-height: 1;
+  z-index: 2;
+  transition: opacity ease-in-out 0.5s, top ease-in-out 1s;
+}
+
+#deathScreenContainer {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 3;
+}
+
+.deathScreenTitle {
+  font-size: 3em;
+  font-weight: 900;
+}
+
+.button {
+  border: none;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  background-color: rgb(30, 30, 30);
+  cursor: pointer;
+  border: 2px solid rgb(50, 50, 50);
+  margin-top: 20px;
+}
+
+.healthBarContainer {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  top: 50px;
+}
+
+#healthBar {
+  width: 500px;
+  height: 25px;
+  background-color: rgb(20, 20, 20);
+  position: relative;
+  box-shadow: 0px 0px 0px 3px black, 0px 0px 0px 5px white;
+  z-index: 2;
+  opacity: 0;
+  overflow: hidden;
+  transition: height ease-in-out 0.5s, width ease-in-out 0.5s, scale ease-in-out 0.5s, opacity ease-in-out 0.5s;
+}
+
+.healthBarText {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+#health {
+  filter: drop-shadow(0px 0px 10px black);
+}
+
+.healthBarShine {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#healthBarOverlay {
+  height: 100%;
+  width: 100%;
+  background-color: #e32727;
+  transition: width cubic-bezier(0,1,.5,1) 0.5s;
+}
+
+#endlessTimer {
+  width: 500px;
+  height: 5px;
+  background-color: rgb(20, 20, 20);
+  position: relative;
+  box-shadow: 0px 0px 0px 3px black, 0px 0px 0px 5px white;
+  z-index: 2;
+  display: none;
+}
+
+#endlessTimerOverlay {
+  height: 100%;
+  width: 50%;
+  background-color: white;
+  transition: width cubic-bezier(0,1,.5,1) 0.5s;
+}
+
+.gameContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game {
+  background-color: rgba(0, 0, 0, 50%);
+  /* width: 1000px;
+  height: 600px; */
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.gameAnim {
+  animation: youDead 2s cubic-bezier(0,1,.5,1) 1 forwards;
+}
+
+@keyframes youDead {
+  from {
+    scale: 100%;
+    rotate: 0;
+    filter: none;
+    opacity: 1;
+  }
+  to {
+    scale: 50%;
+    rotate: 5deg;
+    filter: grayscale() blur(10px);
+    opacity: 0.5;
+  }
+}
+
+#menu {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.songs {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.song {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(30, 30, 30);
+  border: 5px solid rgb(40, 40, 40);
+}
+
+.songTitle {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.songAuthor {
+  font-weight: 500;
+}
+
+.info {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 50%);
+  z-index: 2;
+}
+
+#tooltip {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  z-index: 3;
+  transform: scale(0);
+  transition: transform cubic-bezier(0,1,.5,1) 0.5s;
+}
+
+.key {
+  background-color: rgb(50, 50, 50);
+  border: 3px solid rgb(30, 30, 30);
+  box-shadow: inset 0px 5px rgb(60, 60, 60), inset 0px -5px rgb(40, 40, 40), 0px 0px 0px 1px white;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+
+#player {
+  position: absolute;
+  background-color: aqua;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  font-size: 2em;
+  z-index: 5;
+  transition: top linear 10ms, left linear 10ms, rotate ease-in-out 0.1s, transform var(--bouncy) 0.25s;
+}
+
+.playerHurt {
+  background-color: white;
+  /* animation: hurt 0.5s ease-out 1 forwards; */
+}
+
+@keyframes hurt {
+  from {
+    background-color: red;
+  }
+  to {
+    background-color: aqua;
+  }
+}
+
+.dashAnim {
+  animation: dash 0.25s ease-out 1 forwards;
+}
+
+@keyframes dash {
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: aqua;
+  }
+}
+
+.particle {
+  position: absolute;
+  background-color: aqua;
+  opacity: 0.5;
+  transition: transform linear 1s, opacity ease-in 1s;
+}
+
+.dashShock {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: aqua;
+  animation: dashShock 0.1s linear 1 forwards;
+}
+
+@keyframes dashShock {
+  from {
+    scale: 100%;
+  }
+  to {
+    scale: 0;
+  }
+}
+
+.hazard {
+  position: absolute;
+  background-color: rgb(251, 31, 109);
+  animation: hazardIncoming 0.25s ease-out infinite forwards;
+}
+
+@keyframes hazardIncoming {
+  0% {
+    background-color: rgba(251, 31, 109, 0.25);
+  }
+  50% {
+    background-color: rgba(219, 20, 90, 0.25);
+  }
+  100% {
+    background-color: rgba(251, 31, 109, 0.25)
+  }
+}
+
+.hazardAnimIn {
+  animation: hazardAnimIn 0.25s ease-out 1 forwards;
+}
+
+@keyframes hazardAnimIn {
+  from {
+    background-color: white;
+    outline: 20px solid white;
+  }
+  to {
+    background-color: rgb(251, 31, 109);
+    outline: 0px solid rgb(251, 31, 109);
+  }
+}
+
+.hazardAnimOut {
+  animation: hazardAnimOut 0.25s var(--bouncy2) 1 forwards;
+}
+
+@keyframes hazardAnimOut {
+  from {
+    scale: 110%;
+    background-color: rgb(251, 31, 109);
+  }
+  to {
+    scale: 0%;
+    background-color: rgb(251, 31, 109);
+  }
+}
+
+.hazardAnimOutBarY {
+  animation: hazardAnimOutBarY 0.25s var(--bouncy2) 1 forwards;
+}
+
+@keyframes hazardAnimOutBarY {
+  from {
+    transform: scaleY(110%);
+    background-color: rgb(251, 31, 109);
+  }
+  to {
+    transform: scaleY(0%);
+    background-color: rgb(251, 31, 109);
+  }
+}
+
+.hazardAnimOutBarX {
+  animation: hazardAnimOutBarX 0.25s var(--bouncy2) 1 forwards;
+}
+
+@keyframes hazardAnimOutBarX {
+  from {
+    transform: scaleX(110%);
+    background-color: rgb(251, 31, 109);
+  }
+  to {
+    transform: scaleX(0%);
+    background-color: rgb(251, 31, 109);
+  }
+}
+
+.item {
+  width: 50px;
+  height: 50px;
+  background-color: grey;
+  border-radius: 50%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  outline: 3px solid rgb(70, 70, 70);
+}
