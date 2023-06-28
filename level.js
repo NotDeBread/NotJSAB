@@ -18,6 +18,7 @@ function startLevel(id) {
 
     if(id === 'endless') {
         doge('score').style.top = '10px'
+        doge('level').style.left = '10px'
         doge('endlessTimer').style.display = 'flex'
         placeHazards()
     
@@ -80,6 +81,7 @@ function startLevel(id) {
 
         levelIncreaseInterval = setInterval(() => {
             endlessLevel++
+            doge('level').innerText = `Level ${endlessLevel}`
             if(player.health.current !== 5) {
                 player.health.current++
                 updateHealth()
@@ -92,6 +94,7 @@ function startLevel(id) {
             }
 
             endlessLevelTimer = 60
+            doge('endlessTimerOverlay').style.width = endlessLevelTimer / 60 * 100 + '%'
             
         }, 60000)
         endlessLevelTimerInterval = setInterval(() => {
@@ -111,6 +114,7 @@ function createBorders(size) {
 function endLevel() {
     clearInterval(levelIncreaseInterval)
     doge('score').style.top = '-50px'
+    doge('level').style.left = '-100px'
     doge('endlessTimer').style.display = 'none'
     doge('endingScore').innerText = `Score: ${player.score}`
 }

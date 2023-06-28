@@ -549,20 +549,32 @@ function updatePosition() {
     doge('playerLeft').innerText = `Left?: ${player.direction.left}`
     doge('playerRight').innerText = `Right?: ${player.direction.right}`
     doge('activeHazards').innerText = `Active Hazards: ${activeHazards}`
-    if(collision(playerDisplay, doge('healthBar')) && !gameOver) {
+    if(collision(playerDisplay, healthBar) && !gameOver) {
         healthBar.style.opacity = 0.5
     } else {
         healthBar.style.opacity = 1
+    }
+    if(collision(playerDisplay, doge('endlessTimer'))) {
+        doge('endlessTimer').style.opacity = 0.5
+    } else {
+        doge('endlessTimer').style.opacity = 1
     }
     if(collision(playerDisplay, doge('score'))) {
         doge('score').style.opacity = 0.5
     } else {
         doge('score').style.opacity = 1
     }
+    if(collision(playerDisplay, doge('level'))) {
+        doge('level').style.opacity = 0.5
+    } else {
+        doge('level').style.opacity = 1
+    }
     if(collision(doge('songEndless'), playerDisplay)) {
         tooltip.style.setProperty('transform','scale(100%)')
+        doge('songEndless').style.scale = '110%'
     } else {
         tooltip.style.setProperty('transform','scale(0%)')
+        doge('songEndless').style.scale = '100%'
     }
 }
 
