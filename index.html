@@ -14,7 +14,6 @@
     <span id="version">BETA v0.02</span>
 
     <span id="score">0</span>
-    <em id="level">Level 0</em>
 
     <div id="deathScreenContainer" style="display: none;">
         <em class="deathScreenTitle">YOU DEAD</em>
@@ -22,18 +21,21 @@
         <button onclick="window.location.reload()" class="button">Try Again</button>
     </div>
 
-
     <div class="healthBarContainer">
         <div id="healthBar">
             <div class="healthBarText">
-                <span id="health">3 / 3</span>
+                <span id="health">-</span>
             </div>
             <div class="healthBarShine"></div>
             <div id="healthBarOverlay"></div>
         </div>
+    </div>
+
+    <div id="endlessTimerContainer">
         <div id="endlessTimer">
             <div id="endlessTimerOverlay"></div>
         </div>
+        <span id="level">Level 0</span>
     </div>
 
     <div id="debug" style="display: none;">

@@ -34,7 +34,8 @@ let player = {
     },
     health: {
         current: 0,
-        max: 5
+        max: 100,
+        regen: 0,
     },
 
     movementSpeed: 5,
@@ -146,7 +147,7 @@ document.addEventListener('keydown', (event) => {
         }
     }
 
-    if(event.key === 'Escape') {
+    if(event.key === 'Escape' || event.key === '-') {
         player.health.current = 0
         updateHealth()
     }
@@ -246,13 +247,23 @@ document.addEventListener('keyup', (event) => {
     updateDirection()
 })
 
-function playerHit() {
+function playerHit(damage) {
     if(!player.invincible && !gameOver) {
         DeBread.playSound(`sfx/hurt.mp3`, 0.25)
-        DeBread.shake('healthBar', 10, 5, 5, 100, true, 2)
+
+        let shakeInterval = setInterval(() => {
+            doge('healthBar').style.setProperty('transform',`translateX(${DeBread.randomNum(-5, 5)}px) translateY(${DeBread.randomNum(-5, 5)}px) rotateY(${DeBread.randomNum(45, 55)}deg) rotateX(${DeBread.randomNum(15, 25)}deg)`)
+        }, 10);
+        setTimeout(() => {
+            clearInterval(shakeInterval)
+            doge('healthBar').style.setProperty('transform',`rotateY(50deg) rotateX(20deg)`)
+        }, 100);
+
         DeBread.shake('game', 10, 5, 5, 100, true, 2)
-        if(player.health.current > 0 && !player.invincible) {
-            player.health.current--
+        if(player.health.current - damage >= 0 && !player.invincible) {
+            player.health.current -= damage
+        } else {
+            player.health.current = 0
         }
         player.invincible = true
         DeBread.shake('game', 10, 20, 250, true, 100)
@@ -281,7 +292,15 @@ function playerHit() {
 
 //HAZARD CREATION
 
-function createHazard(type, x, y, size, time, delay, rotation, trailDelay) {
+const hazardTypes = {
+    box: 'box',
+    bar: 'bar',
+    trail: 'trail',
+}
+
+//createHazard(hazardTypes.box, ...)
+
+function createHazard(type, x = DeBread.randomNum(0, game.offsetWidth - 100), y = DeBread.randomNum(0, game.offsetHeight - 100), size = 100, time = 1000, delay = 1000, damage = 10, rotation = 1, trailDelay = 100) {
     if(type === 'box') {
         let hazard = document.createElement('div')
         hazard.classList.add('hazard')
@@ -301,7 +320,7 @@ function createHazard(type, x, y, size, time, delay, rotation, trailDelay) {
             doge('score').innerText = player.score
             let hazardCollision = setInterval(() => {
                 if(collision(hazard, playerDisplay)) {
-                    playerHit()
+                    playerHit(damage)
                     colliding = true
                 } else {
                     colliding = false
@@ -343,7 +362,7 @@ function createHazard(type, x, y, size, time, delay, rotation, trailDelay) {
             doge('score').innerText = player.score
             let hazardCollision = setInterval(() => {
                 if(collision(hazard, playerDisplay)) {
-                    playerHit()
+                    playerHit(damage)
                     colliding = true
                 } else {
                     colliding = false
@@ -394,7 +413,7 @@ function createHazard(type, x, y, size, time, delay, rotation, trailDelay) {
                         doge('score').innerText = player.score
                         let hazardCollision = setInterval(() => {
                             if(collision(hazard, playerDisplay)) {
-                                playerHit()
+                                playerHit(damage)
                                 colliding = true
                             } else {
                                 colliding = false
@@ -430,7 +449,7 @@ function createHazard(type, x, y, size, time, delay, rotation, trailDelay) {
                         hazard.classList.add('hazardAnimIn')
                         let hazardCollision = setInterval(() => {
                             if(collision(hazard, playerDisplay)) {
-                                playerHit()
+                                playerHit(damage)
                                 colliding = true
                             } else {
                                 colliding = false
@@ -508,7 +527,7 @@ function updateHealth() {
     const bar = doge('healthBarOverlay')
     const text = doge('health')
     bar.style.width = player.health.current / player.health.max * 100 + '%'
-    text.innerText = `${player.health.current} / ${player.health.max}`
+    text.innerText = `${Math.ceil(player.health.current)} / ${player.health.max}`
     if(player.health.current === 0 && !gameOver) {
         endLevel()
         game.classList.add('gameAnim')
@@ -533,7 +552,7 @@ function updateHealth() {
     }
 }
 
-setInterval(updatePosition, 8)
+setInterval(updatePosition, 16)
 
 function updatePosition() {
     playerDisplay.style.left = player.position.x + 'px'
